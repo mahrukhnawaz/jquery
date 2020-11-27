@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Div Movement</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            // SLIDE RIGHT
+            $("#moveleft").click(function(){
+                $("#divv").animate({left: '90%'},1000);
+            });
+            // SLIDE LEFT
+            $("#moveright").click(function(){
+                // alert("I AM IN");
+                $("#divv").animate({left: '1%'},1000);
+            });
+            // FADE
+            $("#fade").click(function(){
+                $("#divv").animate({opacity: '0'});
+            });
+            // LOOPING
+            $("#loop").click(function() {
+            var animate = function(event){
+            $("#divv").animate({"left":"90%"},1000,
+                function(){
+                    $("#divv").animate({left: '1%'},1000);
+                        if(event && event.call){
+                            event(animate); /* call animation again */
+                        }
+                })
+            };
+                /* First call */
+                animate(animate);
+            });
+            // Follow Mouse
+            $("#follow").click(function(){
+            $(document).bind('mousemove', function(e){
+                $('#divv').css({
+                    left:  e.pageX,
+                    top:   e.pageY
+                });
+            });
+            });
+        });
+    </script>
+    <style>
+        button{
+            border: none; 
+            background-color: orangered; 
+            color: white; 
+            padding: 15px;
+            font-weight: bolder;
+            border-radius: 5px;
+        }
+        button:hover{
+            cursor: pointer;
+        }
+        div{
+            width: 100px; 
+            height: 100px; 
+            background-color: black; 
+            margin-top: 100px; 
+            left: 40%;
+            position: absolute;
+        }
+        div:hover{
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <!-- fade slide animate -->
+    <button id="moveleft">Slide Right</button>
+    <button id="moveright">Slide Left</button>
+    <button id="loop">Loop It</button>
+    <button id="fade">Fade</button>
+    <button id="follow">Follow</button>
+
+    <div id="divv">    </div>
+</body>
+</html>
